@@ -4,21 +4,19 @@ import Debug
 
 
 
-fold : List a -> (Int, a)
-fold xs =
+removeNothings : List (Int, Maybe a) -> List (Int, a)
+removeNothings xs =
   case xs of
-    [] ->
-      []
-    y::[ys] ->
-      --Debug.log "xs" (List.length (y::[ys]), y)::acc
-      (List.length (y::[ys]), y)
+    [] -> []
+    (c, Nothing) :: ys -> removeNothings ys
+    (c, Just y) :: ys -> (c, y) :: removeNothings ys
 
       
 
 
 runLengths : List (List a) -> List (Int, a)
 runLengths xss =
-  List.map fold xss
+  List.map (\xs -> (List.length xs, List.head xs)) xss |> removeNothings
 
 
 main =
