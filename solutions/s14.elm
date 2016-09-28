@@ -3,14 +3,9 @@ import List
 
 
 
-t : a -> List a -> List a
-t el acc =
-  el :: acc |> (::) el
-
-
 duplicate : List a -> List a
 duplicate list =
-    List.foldr t [] list
+    List.foldr (\ x acc -> (::) x acc |> (::) x) [] list
 
 
 main =
@@ -18,8 +13,8 @@ main =
         (if (test) then
             "Your implementation passed all tests."
          else
-            --toString (duplicate [1, 2, 3, 5, 8, 8])
-            "Your implementation failed at least one test."
+            toString (duplicate [1, 2, 3, 5, 8, 8])
+            --"Your implementation failed at least one test."
         )
 
 
